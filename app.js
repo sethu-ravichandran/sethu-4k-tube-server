@@ -13,7 +13,8 @@ export const createApp = (io) => {
   // Store io instance in app for global access
   app.set('io', io)
 
-  app.use(cors())
+  app.use(cors({ origin: 'https://sethu-4k-tube-client.vercel.app/' }))
+  
   app.use(express.json())
 
   // Inject io into each request
