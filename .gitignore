@@ -1,0 +1,48 @@
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build output
+dist/
+build/
+tmp/
+temp/
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# IDE specific
+.vscode/
+.idea/
+*.sw?
+
+# Coverage and test outputs
+coverage/
+.nyc_output/
+jest-coverage/
+
+# PM2 logs
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Optional: ignore uploaded files or generated files
+uploads/
+downloads/
+public/uploads/
