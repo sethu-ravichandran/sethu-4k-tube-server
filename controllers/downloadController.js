@@ -50,8 +50,17 @@ const downloadVideo = (req, res) => {
     }
   }
 
-  ytDlp.stdout.on('data', handleProgress)
-  ytDlp.stderr.on('data', handleProgress)
+  ytDlp.stdout.on('data', (data) => {
+  const line = data.toString()
+  console.log('[yt-dlp stdout]', line)
+  handleProgress(data)
+})
+
+ytDlp.stderr.on('data', (data) => {
+  const line = data.toString()
+  console.error('[yt-dlp stderr]', line)
+  handleProgress(data)
+})
 
   ytDlp.on('close', (code) => {
     fs.readdir(downloadsDir, (err, files) => {
@@ -74,6 +83,11 @@ const downloadVideo = (req, res) => {
       })
     })
   })
+
+  ytDlp.on('error', (error) => {
+  console.error('yt-dlp process error:', error)
+  socketIO.emit('download-complete', { url, success: false, error: error.message })
+})
 }
 
 export default downloadVideo
