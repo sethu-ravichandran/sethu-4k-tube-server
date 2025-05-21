@@ -2,24 +2,28 @@ import http from 'http'
 import { Server } from 'socket.io'
 import { createApp } from './app.js'
 import createDownloadDirectory from './utils/createDownloadDirectory.js'
+import { setIOInstance } from './socket/ioInstance.js' // 🔑
 
 const PORT = process.env.PORT || 3500
 
 createDownloadDirectory()
 
-const httpServer = http.createServer()
+const app = createApp()
+const httpServer = http.createServer(app)
 
 const io = new Server(httpServer, {
   cors: {
-    origin: 'https://sethu-4k-tube-client.vercel.app', // ✅ Secure origin
+    origin: [
+      'https://sethu-4k-tube-client.vercel.app',
+      'http://localhost:5173'
+    ],
     methods: ['GET', 'POST'],
     credentials: true
   }
 })
 
-const app = createApp(io)
-
-httpServer.on('request', app)
+// 🔌 Save reference globally (optional, clean)
+setIOInstance(io)
 
 io.on('connection', (socket) => {
   console.log(`🔌 Socket connected: ${socket.id}`)
