@@ -15,7 +15,8 @@ const io = new Server(httpServer, {
   cors: {
     origin: [
       'https://sethu-4k-tube-client.vercel.app',
-      'http://localhost:5173'
+      'http://localhost:5173',
+      'https://sethu-4k-tube-server.onrender.com'
     ],
     methods: ['GET', 'POST'],
     credentials: true

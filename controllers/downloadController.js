@@ -8,6 +8,9 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const downloadsDir = path.join(__dirname, '..', 'downloads')
 
+// Path to the bundled yt-dlp binary inside the 'bin' directory
+const ytDlpPath = path.join(__dirname, '..', 'bin', 'yt-dlp')
+
 const parseProgress = (dataStr) => {
   const match = dataStr.match(/(\d+\.\d+)%/)
   return match ? parseFloat(match[1]) : null
@@ -26,7 +29,8 @@ const downloadVideo = (req, res) => {
   const format = formatMap[quality] || formatMap.default
   const filenameTemplate = `${downloadsDir}/%(title)s.%(ext)s`
 
-  const ytDlp = spawn('yt-dlp', [
+  // Use the local yt-dlp binary with full path
+  const ytDlp = spawn(ytDlpPath, [
     '-f',
     format,
     '--recode-video',
